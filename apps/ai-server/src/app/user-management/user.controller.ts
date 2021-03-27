@@ -1,6 +1,6 @@
 import { Controller, Get, Post } from '@nestjs/common';
 import { UserService } from './user.service';
-import { API_USER_MANAGEMENT } from '@ai-playground/shared/infra';
+import {API_USER_MANAGEMENT} from "@ai-playground/infra";
 
 @Controller(API_USER_MANAGEMENT.ROOT)
 export class UserController {
