@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "ai-client",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "projects": {
+    "ai-client": {
+      "projectType": "application",
+      "root": "apps/ai-client",
+      "sourceRoot": "apps/ai-client/src",
+      "prefix": "ai-playground",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/ai-client",
+            "index": "apps/ai-client/src/index.html",
+            "main": "apps/ai-client/src/main.ts",
+            "polyfills": "apps/ai-client/src/polyfills.ts",
+            "tsConfig": "apps/ai-client/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/ai-client/src/favicon.ico",
+              "apps/ai-client/src/assets"
+            ],
+            "styles": ["apps/ai-client/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/ai-client/src/environments/environment.ts",
+                  "with": "apps/ai-client/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ai-client:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ai-client:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ai-client:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/ai-client/src/**/*.ts",
+              "apps/ai-client/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/ai-client"],
+          "options": {
+            "jestConfig": "apps/ai-client/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ai-client-e2e": {
+      "root": "apps/ai-client-e2e",
+      "sourceRoot": "apps/ai-client-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ai-client-e2e/cypress.json",
+            "tsConfig": "apps/ai-client-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ai-client:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ai-client:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/ai-client-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
