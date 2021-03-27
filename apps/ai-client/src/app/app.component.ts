@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AUTH_ROUTES } from '@ai-playground/infra';
 
 @Component({
   selector: 'ai-playground-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'ai-client';
+  registerUserLink = AUTH_ROUTES.registerUser();
 }
